@@ -1,5 +1,12 @@
-server/static/%.htm: templates/htm.jq src/%.jq.xml
-	./combine-src-xhtml.sh $* $< > $@
+to_static = static/$(shell echo '$(1)' | cut -d / -f 4-)
 
-server/static/%.xht: templates/xht.jq src/%.jq.xml
-	./combine-src-xhtml.sh $* $< > $@
+.SECONDEXPANSION:
+
+%.xht: xhtml5.jq %.jq.xml $$(wildcard $$*.css $$*.js)
+	./join-jq-html.sh $* $< > $(call to_static,$@)
+
+%.html: html5.jq %.jq.xml $$(wildcard $$*.css $$*.js)
+	./join-jq-html.sh $* $< > $(call to_static,$@)
+
+%.ht16: xht-utf16.jq %.jq.xml $$(wildcard $$*.css $$*.js)
+	./join-jq-html.sh $* $< | iconv -f UTF-8 -t UTF-16LE > $(call to_static,$@)
