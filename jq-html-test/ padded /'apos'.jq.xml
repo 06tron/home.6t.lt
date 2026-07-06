@@ -1,0 +1,9 @@
+{ name: "'apos'"
+
+, head:
+"<link
+rel='icon'
+href='./icons/folder.svg'/>"
+
+, main:
+"<p>MAIN</p>" }

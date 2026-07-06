@@ -5,7 +5,7 @@ extras=(
 	--arg version $(jq --version)
 	--arg updated $(
 		cd "$(dirname "$1")"
-		git log homepage -1 --pretty=format:%aI "$(basename "$1").jq.xml"
+		git log homepage -1 --pretty=format:%as "$(basename "$1").jq.xml"
 	)
 )
 
