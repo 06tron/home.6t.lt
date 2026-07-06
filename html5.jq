@@ -25,7 +25,7 @@ header#shared_top {}
 else "" end,
 # "</head>" and "<body>" omitted: head immediately followed by body, and body's first child node would be invalid as head's last child node
 "<header
-id='shared_top'></header>",
+id=shared_top></header>",
 .body,
 if $javascript then
 "<script>

@@ -24,7 +24,7 @@ header#shared_top {}
 \($css)</style>"
 else "" end,
 "</head><body><header
-id=shared_top></header>",
+id='shared_top'></header>",
 .body,
 if $javascript then
 "<script>

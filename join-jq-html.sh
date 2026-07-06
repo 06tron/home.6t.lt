@@ -1,6 +1,13 @@
 #!/bin/bash
 
-extras=( --arg path "$1" --arg version $(jq --version) )
+extras=(
+	--arg path "$1"
+	--arg version $(jq --version)
+	--arg updated $(
+		cd "$(dirname "$1")"
+		git log homepage -1 --pretty=format:%aI "$(basename "$1").jq.xml"
+	)
+)
 
 if [ -f "$1.css" ]
 then
