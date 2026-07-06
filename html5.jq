@@ -1,16 +1,35 @@
+# Copyright (c) 2026, Matthew Richardson
+# (https://orcid.org/0009-0001-0977-2029).
+#
+# This Source Code Form is subject to the terms of the
+# Mozilla Public License, v. 2.0. If a copy of the MPL was
+# not distributed with this file, You can obtain one at
+# https://mozilla.org/MPL/2.0/.
+
 [
-# "<head>" omitted: head's first child node is an element
 "<!DOCTYPE
 html><html
-lang=en>", (
+class=h-entry
+lang=en><meta
+charset=utf-8><title
+class=p-name>",
+# "<head>" omitted: head's first child node is an element
+.name,
+"</title>", (
 $path | indices("/") | length - 3 | if . > 0 then
 "<base
 href=\("../" * .)>"
 else "" end
-), "<meta
-charset=utf-8><meta
-name=author
-content=https://orcid.org/0009-0001-0977-2029><meta
+), "<link
+rel=author
+href=https://orcid.org/0009-0001-0977-2029
+class=p-author
+title='Matthew Richardson'><link
+rel=canonical
+href=https://home.6t.lt/", (
+$path | [split("/")[3:][] | @uri] | join("/")
+), ".html
+class=u-url><meta
 name=color-scheme
 content='dark light'><meta
 name=generator
@@ -20,13 +39,30 @@ content='width=device-width'>",
 .head,
 if $css then
 "<style>
-header#shared_top {}
 \($css)</style>"
 else "" end,
-# "</head>" and "<body>" omitted: head immediately followed by body, and body's first child node would be invalid as head's last child node
+# "</head>" and "<body>" omitted: head immediately followed
+# by body, and body's first child node would be invalid as
+# head's last child node
 "<header
-id=shared_top></header>",
-.body,
+id=shared_top><a
+href=./><img
+alt='Heart-shaped tromino icon.'
+src=./icons/♥.svg
+height=40
+width=40></a><a
+rel=alternate
+type=text/html
+href=", (
+$path | [split("/")[1:][] | @uri] |
+"https://github.com/06tron/\(.[0])/blob/homepage/\(.[1:] | join("/")).jq.xml"
+), ">Updated <time
+class=dt-updated>",
+$updated,
+"</time></a></header><main
+class=e-content>",
+.main,
+"</main>",
 if $javascript then
 "<script>
 \($javascript)</script>"
