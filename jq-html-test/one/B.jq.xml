@@ -1,4 +1,4 @@
-{ name: "'apos'"
+{ name: "B"
 
 , head:
 "<link
@@ -6,4 +6,4 @@ rel='icon'
 href='./icons/folder.svg'/>"
 
 , main:
-"<p>MAIN</p>" }
+"<p>B MAIN</p>" }
