@@ -1,0 +1,58 @@
+# Copyright (c) 2026, Matthew Richardson
+# (https://orcid.org/0009-0001-0977-2029).
+#
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+REPOS = [
+	"06tron",
+	"typesetting"
+]
+
+def find_source_files(wildcards):
+	input = {}
+	for repository in REPOS:
+		source = f"../{repository}/{wildcards.path}"
+		source_xml = source + ".jq.xml"
+		if exists(source_xml):
+			input["xml"] = source_xml
+		else:
+			continue
+		source_css = source + ".css"
+		if exists(source_css):
+			input["css"] = source_css
+		source_js = source + ".js"
+		if exists(source_js):
+			input["js"] = source_js
+		break
+	return input
+
+rule jq_to_html5:
+	input:
+		unpack(find_source_files)
+		"full-html5.jq"
+	output:
+		"static-home/{path}.html"
+	script:
+		"scripts/jq-to-html.py"
+
+rule jq_to_html_polyglot:
+	input:
+		unpack(find_source_files)
+		"head-html-polyglot.txt"
+		"tail-xhtml.jq"
+	output:
+		"static-home/{path}.xht"
+    script:
+		"scripts/jq-to-html.py"
+
+rule jq_to_xhtml_utf16:
+	input:
+		unpack(find_source_files)
+		"head-xhtml-utf16.txt"
+		"tail-xhtml.jq"
+	output:
+		"static-home/utf-16/{path}.xhtml"
+	script:
+		"scripts/jq-to-html.py"
