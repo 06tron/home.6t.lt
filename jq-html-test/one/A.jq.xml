@@ -3,4 +3,7 @@
 , head:
 "<link
 rel='stylesheet'
-href='./style.css'/>" }
+href='./style.css'/>"
+
+, main:
+"<p>A MAIN</p>" }

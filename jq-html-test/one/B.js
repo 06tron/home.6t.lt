@@ -1,1 +1,1 @@
-console.log("printed by B.js");
+console.log('printed by B.js');
