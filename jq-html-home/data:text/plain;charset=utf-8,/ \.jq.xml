@@ -1,0 +1,7 @@
+{ name: "Space Backslash"
+
+, main:
+"<p><a
+href='data:text/plain;charset=utf-8,/%20%5C'></a></p><p><a
+href='data%3Atext/plain;charset=utf-8,/%20%5C'></a></p><p><a
+href='./data:text/plain;charset=utf-8,/%20%5C'></a></p>" }

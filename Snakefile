@@ -54,6 +54,6 @@ rule jq_to_xhtml_utf16:
 		prefix = "head-xhtml-utf16.txt",
 		template = "tail-xhtml.jq"
 	output:
-		"static-home/utf-16/{path}.xhtml"
+		"static-home/{path}.utf-16.xhtml"
 	script:
 		"scripts/jq-to-html.py"
