@@ -7,7 +7,8 @@
 
 REPOS = [
 	"06tron",
-	"typesetting"
+	"typesetting",
+	"home.6t.lt"
 ]
 
 def find_source_files(wildcards):
@@ -25,8 +26,8 @@ def find_source_files(wildcards):
 		source_js = source + ".js"
 		if exists(source_js):
 			input["js"] = source_js
-		break
-	return input
+		return input
+	raise ValueError("Source not found")
 
 rule jq_to_html5:
 	input:

@@ -16,6 +16,7 @@ jq_to_json = subprocess.run(
 		snakemake.input["xml"],
 		"--null-input"
 	],
+	check = True,
 	stdout = subprocess.PIPE
 )
 
@@ -39,16 +40,17 @@ invoke_jq = [
 			"log",
 			"homepage",
 			"-1",
-			"--pretty=format:%%as",
+			"--pretty=format:%as",
 			source_xml_name
 		],
 		capture_output = True,
-		cwd = source_dir
-		text = True,
+		check = True,
+		cwd = source_dir,
+		text = True
 	).stdout
 ]
 
-if "css" in snakemake.input:
+if hasattr(snakemake.input, "css"):
 	invoke_jq.extend([
 		"--rawfile",
 		"css",
@@ -61,7 +63,7 @@ else:
 		"false"
 	])
 
-if "js" in snakemake.input:
+if hasattr(snakemake.input, "js"):
 	invoke_jq.extend([
 		"--rawfile",
 		"javascript",
@@ -74,15 +76,37 @@ else:
 		"false"
 	])
 
+print(*invoke_jq, sep = "\n\t")
+
 output_file = snakemake.output[0]
 output_dir = output_file[:output_file.rindex("/")]
 os.makedirs(output_dir, exist_ok = True)
 
-if "prefix" in snakemake.input:
+if hasattr(snakemake.input, "prefix"):
 	shutil.copy(snakemake.input["prefix"], output_file)
 
-subprocess.run(
+json_to_html = subprocess.run(
 	invoke_jq,
-	stdin = jq_to_json.stdout
-	stdout = open(output_file, "a")
+	check = True,
+	input = jq_to_json.stdout,
+	stdout = subprocess.PIPE
 )
+
+if snakemake.rule == "jq_to_xhtml_utf16":
+	utf8_to_utf16 = subprocess.run(
+		[
+			"iconv",
+			"-f",
+			"UTF-8",
+			"-t",
+			"UTF-16LE"
+		],
+		check = True,
+		input = json_to_html.stdout,
+		stdout = subprocess.PIPE
+	)
+	final_output = utf8_to_utf16.stdout
+else:
+	final_output = json_to_html.stdout
+
+open(output_file, "ab").write(final_output)
