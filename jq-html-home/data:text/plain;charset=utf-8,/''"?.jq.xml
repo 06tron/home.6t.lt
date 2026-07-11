@@ -1,8 +1,11 @@
 { name: "Single Quote Single Quote Double Quote Question Mark"
 
 , head:
-"<style>main > p > a::after { content: ' → ' attr(href); }</style>"
+"<style>
+#l::after { content: ' → ' attr(href); }
+</style>"
 
 , main:
 "<p><a
+id='l'
 href=\"?s=:is(p,dl,ol,ul):has(span%5Bid%5E=note_%5D),aside:has(a%5Bhref%5E='%23note_'%5D)\">'relative-URL string' beginning with an empty 'path-relative-scheme-less-URL string'</a></p>" }
