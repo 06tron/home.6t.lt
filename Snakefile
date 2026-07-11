@@ -13,7 +13,7 @@ REPOS = [
 def find_source_files(wildcards):
 	input = {}
 	for repository in REPOS:
-		source = f"../{repository}/{wildcards.path}"
+		source = f"../{repository}/jq-html-home/{wildcards.path}"
 		source_xml = source + ".jq.xml"
 		if exists(source_xml):
 			input["xml"] = source_xml
@@ -30,8 +30,8 @@ def find_source_files(wildcards):
 
 rule jq_to_html5:
 	input:
-		unpack(find_source_files)
-		"full-html5.jq"
+		unpack(find_source_files),
+		template = "full-html5.jq"
 	output:
 		"static-home/{path}.html"
 	script:
@@ -39,19 +39,19 @@ rule jq_to_html5:
 
 rule jq_to_html_polyglot:
 	input:
-		unpack(find_source_files)
-		"head-html-polyglot.txt"
-		"tail-xhtml.jq"
+		unpack(find_source_files),
+		prefix = "head-html-polyglot.txt",
+		template = "tail-xhtml.jq"
 	output:
 		"static-home/{path}.xht"
-    script:
+	script:
 		"scripts/jq-to-html.py"
 
 rule jq_to_xhtml_utf16:
 	input:
-		unpack(find_source_files)
-		"head-xhtml-utf16.txt"
-		"tail-xhtml.jq"
+		unpack(find_source_files),
+		prefix = "head-xhtml-utf16.txt",
+		template = "tail-xhtml.jq"
 	output:
 		"static-home/utf-16/{path}.xhtml"
 	script:

@@ -26,8 +26,6 @@ $path | [split("/")[3:][] | @uri] | join("/")
 class='u-url'/><meta
 name='color-scheme'
 content='dark light'/><meta
-name='generator'
-content='", $version, "'/><meta
 name='viewport'
 content='width=device-width'/>",
 .head,
