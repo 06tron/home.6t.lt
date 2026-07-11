@@ -2,6 +2,6 @@
 
 , main:
 "<p><a
-href='data:text/plain;charset=utf-8,/%20%5C'></a></p><p><a
-href='data%3Atext/plain;charset=utf-8,/%20%5C'></a></p><p><a
-href='./data:text/plain;charset=utf-8,/%20%5C'></a></p>" }
+href='data:text/plain;charset=utf-8,/%20%5C.html'>'path-relative-URL string' which is also 'absolute-URL string'</a></p><p><a
+href='data%3Atext/plain;charset=utf-8,/%20%5C.html'>'path-relative-scheme-less-URL string'</a></p><p><a
+href='./data:text/plain;charset=utf-8,/%20%5C.html'>'path-relative-scheme-less-URL string' starting with 'single-dot URL path segment'</a></p>" }

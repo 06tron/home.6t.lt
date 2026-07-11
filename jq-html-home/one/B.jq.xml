@@ -1,9 +1,0 @@
-{ name: "B"
-
-, head:
-"<link
-rel='icon'
-href='./icons/folder.svg'/>"
-
-, main:
-"<p>B MAIN</p>" }
