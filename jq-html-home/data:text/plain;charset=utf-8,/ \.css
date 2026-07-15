@@ -1,3 +1,4 @@
 main > p > a::after {
 	content: ' → ' attr(href);
+	word-break: break-all;
 }

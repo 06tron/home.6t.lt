@@ -2,10 +2,32 @@
 
 , head:
 "<style>
-#l::after { content: ' → ' attr(href); }
+#l::after { content: ' → ' attr(href); word-spacing: -0.25em; }
 </style>"
 
 , main:
 "<p><a
-id='l'
-href=\"?s=:is(p,dl,ol,ul):has(span%5Bid%5E=note_%5D),aside:has(a%5Bhref%5E='%23note_'%5D)\">'relative-URL string' beginning with an empty 'path-relative-scheme-less-URL string'</a></p>" }
+href=\"?
+s
+=
+:is(
+p,
+dl,
+ol,
+ul
+)
+:has(
+%5B
+id
+%5E=
+note_
+%5D
+),
+aside:has(
+a%5B
+href
+%5E=
+'%23note_'
+%5D
+)\"
+id='l'>'relative-URL string' beginning with an empty 'path-relative-scheme-less-URL string'</a></p>" }
