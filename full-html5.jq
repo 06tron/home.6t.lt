@@ -28,7 +28,9 @@ rel=canonical
 href=https://home.6t.lt/", (
 $path | [split("/")[3:][] | @uri] | join("/")
 ), ".html
-class=u-url><meta
+class=u-url><link
+rel=stylesheet
+href=./shared-style.css><meta
 name=color-scheme
 content='dark light'><meta
 name=viewport
@@ -47,15 +49,17 @@ alt='Heart-shaped tromino icon.'
 src=./icons/♥.svg
 height=40
 width=40></a><a
+href=./mf2.html>blog</a><a
 rel=alternate
 type=text/html
 href=", (
 $path | [split("/")[1:][] | @uri] |
 "https://github.com/06tron/\(.[0])/blob/homepage/\(.[1:] | join("/")).jq.xml"
-), ">Updated <time
+), ">updated <time
 class=dt-updated>",
 $updated,
-"</time></a></header><main
+"</time></a><a
+href=./sitemap.html>sitemap</a></header><main
 class=e-content>",
 .main,
 "</main>",
