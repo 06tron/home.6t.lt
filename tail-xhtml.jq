@@ -45,10 +45,10 @@ $css,
 "</head><body>",
 if .separate then [
 "<time
-class='dt-updated'
 datetime='",
 $updated,
-"'></time>"
+"'
+class='dt-updated'></time>"
 ] else [
 "<header
 id='shared_top'><a
