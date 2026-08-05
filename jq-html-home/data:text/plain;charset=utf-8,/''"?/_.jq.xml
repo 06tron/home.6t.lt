@@ -1,11 +1,12 @@
 { name: "Single Quote Single Quote Double Quote Question Mark"
 
 , head:
-"<style>
-#l::after { content: ' → ' attr(href); word-break: break-all; }
-</style>"
+"<link
+rel='icon'
+href='./icons/folder.svg'/>"
 
 , main:
 "<p><a
-href=\"?s=:is(p,dl,ol,ul):has(%5Bid%5E=note_%5D),aside:has(a%5Bhref*='%23note_'%5D)\"
+href='?s=:is(p,dl,ol,ul):has(%5Bid%5E=note_%5D),aside:has(a%5Bhref*=&apos;%23note_&apos;%5D)'
+class='naked'
 id='l'>'relative-URL string' beginning with an empty 'path-relative-scheme-less-URL string'</a></p>" }

@@ -20,9 +20,7 @@ jq_to_json = subprocess.run(
 	stdout = subprocess.PIPE
 )
 
-source_path = snakemake.input["xml"][:-7] # removing ".jq.xml"
-source_dir = source_path[:source_path.rindex("/")]
-source_xml_name = snakemake.input["xml"].split("/")[-1]
+source_dir = snakemake.input["xml"][:-9] # removing "/_.jq.xml"
 
 invoke_jq = [
 	"jq",
@@ -31,7 +29,7 @@ invoke_jq = [
 	"--raw-output",
 	"--arg",
 	"path",
-	source_path,
+	source_dir,
 	"--arg",
 	"updated",
 	subprocess.run(
@@ -41,7 +39,7 @@ invoke_jq = [
 			"homepage",
 			"-1",
 			"--pretty=format:%as",
-			source_xml_name
+			"."
 		],
 		capture_output = True,
 		check = True,

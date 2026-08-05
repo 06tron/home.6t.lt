@@ -72,7 +72,7 @@ href=",
 .[0],
 "/blob/homepage/",
 (.[1:] | join("/")),
-".jq.xml"
+"/"
 ]),
 ">updated <time
 class=dt-updated>",

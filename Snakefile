@@ -15,15 +15,15 @@ def find_source_files(wildcards):
 	input = {}
 	for repository in REPOS:
 		source = f"../{repository}/jq-html-home/{wildcards.path}"
-		source_xml = source + ".jq.xml"
+		source_xml = source + "/_.jq.xml"
 		if exists(source_xml):
 			input["xml"] = source_xml
 		else:
 			continue
-		source_css = source + ".css"
+		source_css = source + "/_.css"
 		if exists(source_css):
 			input["css"] = source_css
-		source_js = source + ".js"
+		source_js = source + "/_.js"
 		if exists(source_js):
 			input["js"] = source_js
 		return input
