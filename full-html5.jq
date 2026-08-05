@@ -64,8 +64,6 @@ src=./icons/♥.svg
 height=40
 width=40></a><a
 href=./mf2.html>blog</a><a
-rel=alternate
-type=text/html
 href=",
 ($path | [split("/")[1:][] | @uri] | [
 "https://github.com/06tron/",
