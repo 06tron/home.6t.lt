@@ -1,0 +1,28 @@
+html {
+	--article-max-width: 32rem;
+	--border-width: 2px;
+	--pre-padding-width: 0.7rem;
+	--side-margin: 2rem;
+}
+
+body {
+	margin: 0px var(--side-margin) 0px;
+	max-width: var(--article-max-width);
+}
+
+main {
+	background: linear-gradient(transparent 30px, #F002 30px);
+}
+
+pre {
+	border: var(--border-width) solid #7776;
+	display: flex;
+	max-width: calc(100vw - 2 * (var(--border-width) + var(--pre-padding-width) + var(--side-margin)));
+	overflow-x: auto;
+	padding: var(--pre-padding-width);
+	width: max-content;
+	&::after {
+		content: "";
+		flex: 0 0 max(0px, 100% - var(--article-max-width) + var(--border-width) + var(--pre-padding-width));
+	}
+}

@@ -1,0 +1,78 @@
+{ name: "<pre>"
+
+, head:
+"<link
+rel='icon'
+href='./icons/folder.svg'/>"
+
+, main:
+"<h1><a
+href='./data:text/html;charset=utf-8,%3C!DOCTYPE%20html%3E%3Ctitle%20%3E%26lt;pre%3E%3C/title%3E.html'>CSS for &lt;pre> elements</a></h1><p>It's good to set a maximum paragraph width on websites, since long lines can be hard to read. But then how should non-wrapping text be handled?</p><pre>- >192 -
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.</pre><pre>- 30 -
+This Source Code Form is
+subject to the terms of the
+Mozilla Public License, v.
+2.0. If a copy of the MPL was
+not distributed with this
+file, You can obtain one at
+https://mozilla.org/MPL/2.0/.</pre><p>We could display elements like &lt;pre> using a box with the same maximum width, and allow scrolling within the box to reveal the full text.</p><pre>- 100 -
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy of
+the MPL was not distributed with this file, You can obtain one at https://mozilla.org/MPL/2.0/.</pre><pre>- 96 -
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a copy
+of the MPL was not distributed with this file, You can obtain one at
+https://mozilla.org/MPL/2.0/.</pre><pre>- 93 -
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If a
+copy of the MPL was not distributed with this file, You can obtain one at
+https://mozilla.org/MPL/2.0/.</pre><pre>- 88 -
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0. If
+a copy of the MPL was not distributed with this file, You can obtain one at
+https://mozilla.org/MPL/2.0/.</pre><p>Then all text is readable within the maximum width. But why make users scroll if they don't need to?</p><pre>- 86 -
+This Source Code Form is subject to the terms of the Mozilla Public License, v. 2.0.
+If a copy of the MPL was not distributed with this file, You can obtain one at
+https://mozilla.org/MPL/2.0/.</pre><pre>- 83 -
+This Source Code Form is subject to the terms of the Mozilla Public License, v.
+2.0. If a copy of the MPL was not distributed with this file, You can obtain one at
+https://mozilla.org/MPL/2.0/.</pre><pre>- 82 -
+This Source Code Form is subject to the terms of the Mozilla Public License, v.
+2.0. If a copy of the MPL was not distributed with this file, You can obtain one
+at https://mozilla.org/MPL/2.0/.</pre><pre>- 79 -
+This Source Code Form is subject to the terms of the Mozilla Public License, v.
+2.0. If a copy of the MPL was not distributed with this file, You can obtain
+one at https://mozilla.org/MPL/2.0/.</pre><p>The window containing the webpage is often wider than my maximum paragraph width.</p><pre>- 78 -
+This Source Code Form is subject to the terms of the Mozilla Public License,
+v. 2.0. If a copy of the MPL was not distributed with this file, You can
+obtain one at https://mozilla.org/MPL/2.0/.</pre><pre>- 75 -
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this file,
+You can obtain one at https://mozilla.org/MPL/2.0/.</pre><pre>- 72 -
+This Source Code Form is subject to the terms of the Mozilla Public
+License, v. 2.0. If a copy of the MPL was not distributed with this
+file, You can obtain one at https://mozilla.org/MPL/2.0/.</pre><pre>- 66 -
+This Source Code Form is subject to the terms of the Mozilla
+Public License, v. 2.0. If a copy of the MPL was not distributed
+with this file, You can obtain one at
+https://mozilla.org/MPL/2.0/.</pre><p>I wanted to use this empty space to display the non-wrapping text, while still giving users the option to scroll and read everything within the maximum paragraph width.</p><pre>- 63 -
+This Source Code Form is subject to the terms of the Mozilla
+Public License, v. 2.0. If a copy of the MPL was not
+distributed with this file, You can obtain one at
+https://mozilla.org/MPL/2.0/.</pre><pre>- 59 -
+This Source Code Form is subject to the terms of the
+Mozilla Public License, v. 2.0. If a copy of the MPL was
+not distributed with this file, You can obtain one at
+https://mozilla.org/MPL/2.0/.</pre><pre>- 55 -
+This Source Code Form is subject to the terms of the
+Mozilla Public License, v. 2.0. If a copy of the MPL
+was not distributed with this file, You can obtain one
+at https://mozilla.org/MPL/2.0/.</pre><pre>- 53 -
+This Source Code Form is subject to the terms of the
+Mozilla Public License, v. 2.0. If a copy of the MPL
+was not distributed with this file, You can obtain
+one at https://mozilla.org/MPL/2.0/.</pre><p>The CSS on this webpage adds extra horizontal space inside the boxes, allowing users to scroll all text into the maximum paragraph width.</p><pre>- 51 -
+This Source Code Form is subject to the terms of
+the Mozilla Public License, v. 2.0. If a copy of
+the MPL was not distributed with this file, You can
+obtain one at https://mozilla.org/MPL/2.0/.</pre><pre>- 50 -
+This Source Code Form is subject to the terms of
+the Mozilla Public License, v. 2.0. If a copy of
+the MPL was not distributed with this file, You
+can obtain one at https://mozilla.org/MPL/2.0/.</pre>" }
