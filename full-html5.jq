@@ -13,7 +13,7 @@ lang=en><meta
 charset=utf-8><title
 class=p-name>",
 # "<head>" omitted: head's first child node is an element
-.name,
+(.name | @html),
 "</title>",
 if .separate then "" else [
 ($path | indices("/") | length - 3 | if . > 0 then [

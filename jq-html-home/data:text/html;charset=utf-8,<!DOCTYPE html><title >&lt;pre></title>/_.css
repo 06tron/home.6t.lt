@@ -21,8 +21,9 @@ pre {
 	overflow-x: auto;
 	padding: var(--pre-padding-width);
 	width: max-content;
-	&::after {
-		content: "";
-		flex: 0 0 max(0px, 100% - var(--article-max-width) + var(--border-width) + var(--pre-padding-width));
-	}
+}
+
+pre::after {
+	content: "";
+	flex: 0 0 max(0px, 100% - var(--article-max-width) + var(--border-width) + var(--pre-padding-width));
 }

@@ -3,7 +3,7 @@
 , head:
 "<link
 rel='stylesheet'
-href='./column-style.css'><link
+href='./column-style.css'/><link
 rel='icon'
 href='./icons/folder.svg'/>"
 

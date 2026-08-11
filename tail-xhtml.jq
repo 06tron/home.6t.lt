@@ -8,7 +8,7 @@
 [
 "<title
 class='p-name'>",
-.name,
+(.name | @html),
 "</title>",
 if .separate then "" else [
 ($path | indices("/") | length - 3 | if . > 0 then [
