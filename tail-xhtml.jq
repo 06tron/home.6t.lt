@@ -8,7 +8,7 @@
 [
 "<title
 class='p-name'>",
-(.name | @html),
+.name,
 "</title>",
 if .separate then "" else [
 ($path | indices("/") | length - 3 | if . > 0 then [
@@ -60,11 +60,10 @@ width='40'/></a><a
 href='./mf2.html'>blog</a><a
 href='",
 ($path | [split("/")[1:][] | @uri] | [
-"https://github.com/06tron/",
+"https://tangled.org/mrichardson.tngl.sh/",
 .[0],
-"/blob/homepage/",
-(.[1:] | join("/")),
-"/"
+"/tree/homepage/",
+(.[1:] | join("/"))
 ]),
 "'>updated <time
 class='dt-updated'>",

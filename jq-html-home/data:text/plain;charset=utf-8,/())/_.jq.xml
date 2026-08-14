@@ -3,9 +3,7 @@
 , head:
 "<link
 rel='stylesheet'
-href='./column-style.css'/><link
-rel='icon'
-href='./icons/folder.svg'/>"
+href='./column-style.css'/>"
 
 , main:
 "<article><p>These four aside-notes use <code><var>id</var></code> attributes starting with <q><samp>body_</samp></q>, allowing them to be styled with CSS counters by my website's <a

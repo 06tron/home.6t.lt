@@ -7,8 +7,8 @@
 
 REPOS = [
 	"06tron",
-	"typesetting",
-	"home.6t.lt"
+	"home.6t.lt",
+	"textbook-exercises"
 ]
 
 def find_source_files(wildcards):
