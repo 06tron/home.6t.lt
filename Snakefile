@@ -33,9 +33,9 @@ JQ_XML_PATHS = glob_wildcards("static-home/{path}.utf-16.xhtml")[0]
 
 rule all_jq_to_html:
 	input:
-		expand("static-home/{path}.html", path=JQ_XML_PATHS),
-		expand("static-home/{path}.xht", path=JQ_XML_PATHS),
-		expand("static-home/{path}.utf-16.xhtml", path=JQ_XML_PATHS)
+		expand("static-home/{path}.html", path = JQ_XML_PATHS),
+		expand("static-home/{path}.xht", path = JQ_XML_PATHS),
+		expand("static-home/{path}.utf-16.xhtml", path = JQ_XML_PATHS)
 	default_target: True
 
 rule jq_to_html5:
