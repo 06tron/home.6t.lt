@@ -94,5 +94,7 @@ rule static_file:
 		static_source
 	output:
 		"compiled-home/{path}"
-	shell:
-		"mkdir -p $(dirname {output}) && cp {input} {output}"
+	params:
+		dir = subpath(output[0], parent = True)
+	script:
+		"scripts/copy_static.py"
