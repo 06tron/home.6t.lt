@@ -5,6 +5,10 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
+import os
+
+ALL_DIRECTORIES = [dirpath for dirpath, dirnames, filenames in os.walk("compiled_home")]
+
 REPOS = [
 	"06tron",
 	"home.6t.lt",
@@ -50,15 +54,81 @@ for path in glob_wildcards(pattern)[0] ]
 # dot, and should contain a file extension other than '.html', '.xht',
 # or '.utf-16.xhtml'.
 
-ruleorder: jq_to_html5 > jq_to_html_polyglot > jq_to_xhtml_utf16 > static_file
+ARTICLE_NUMBERS = glob_wildcards("../06tron/articles/{hex}.xml")[0]
+
+ruleorder: homepage_html5 > blog_html5 > blog_atom > blog_json > article_json > mirror_html5 > tree_index_html5 > jq_to_html5 > jq_to_html_polyglot > jq_to_xhtml_utf16 > static_file
 
 rule all:
 	input:
+		expand("{path}/index.html", path = ALL_DIRECTORIES)
 		expand("compiled-home/{path}.html", path = JQ_HTML_PATHS),
 		expand("compiled-home/{path}.xht", path = JQ_HTML_PATHS),
 		expand("compiled-home/{path}.utf-16.xhtml", path = JQ_HTML_PATHS),
 		expand("compiled-home/{path}", path = STATIC_PATHS)
 	default_target: True
+
+rule homepage_html5:
+	input:
+		prefix = "compiled-home/feed.json",
+		html = "../06tron/home.6t.lt/index.html",
+		js = "../06tron/home.6t.lt/mainpage.js"
+	output:
+		"compiled-home/index.html",
+		js = "compiled-home/mainpage.js"
+	script:
+		"scripts/copy-files.py"
+
+rule blog_html5:
+	input:
+		"../06tron/home.6t.lt/json-feed-to-mf2.jq",
+		"compiled-home/feed.json"
+	output:
+		"compiled-home/mf2.html"
+	shell:
+		"jq --from-file {input} --raw-output > {output}"
+
+rule blog_atom:
+	input:
+		"../06tron/home.6t.lt/json-feed-to-atom.jq",
+		"compiled-home/feed.json"
+	output:
+		"compiled-home/atom.xml"
+	shell:
+		"jq --from-file {input} --raw-output > {output}"
+
+rule blog_json:
+	input:
+		expand("blog/{hex}.json", hex = ARTICLE_NUMBERS),
+		"../06tron/home.6t.lt/outline.json"
+	output:
+		"compiled-home/feed.json"
+	script:
+		"scripts/create-blog-json.py"
+
+rule article_json:
+	input:
+		"../06tron/articles/{hex}.xml"
+	output:
+		"blog/{hex}.json"
+	script:
+		"scripts/create-article-json.py"
+
+rule mirror_html5:
+	input:
+		"../06tron/home.6t.lt/mirror.html"
+	output:
+		"compiled-home/shortcuts/index.html"
+	script:
+		"scripts/copy-files.py"
+
+rule tree_index_html5:
+	input:
+		"compiled-home/{path}",
+		prefix = "../06tron/home.6t.lt/sitemap.html"
+	output:
+		"compiled-home/{path}/index.html"
+	script:
+		"scripts/create-tree.py"
 
 rule jq_to_html5:
 	input:
@@ -94,7 +164,5 @@ rule static_file:
 		static_source
 	output:
 		"compiled-home/{path}"
-	params:
-		dir = subpath(output[0], parent = True)
 	script:
-		"scripts/copy_static.py"
+		"scripts/copy-files.py"
