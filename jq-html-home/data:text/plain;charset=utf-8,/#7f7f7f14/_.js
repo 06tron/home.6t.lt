@@ -1,0 +1,18 @@
+document
+.body
+.style
+.backgroundColor
+=
+document
+.querySelector(
+	'main'
+)
+.appendChild(
+	document.createElement(
+		'h1'
+	)
+)
+.textContent
+=
+document
+.title
