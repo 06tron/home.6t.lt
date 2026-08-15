@@ -1,5 +1,5 @@
-SCHEMA/
+compiled-home/
 .snakemake/
-static-home/
+SCHEMA/
 
 .DS_Store
