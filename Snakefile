@@ -33,11 +33,11 @@ def jq_html_source(wildcards):
 		return input
 	raise ValueError("Source not found in a jq-html-home directory")
 
-JQ_HTML_PATHS = glob_wildcards("compiled-home/{path}.utf-16.xhtml")[0]
+JQ_HTML_PATHS = glob_wildcards("homepage/{path}.utf-16.xhtml")[0]
 # Paths to newly created _.jq.xml files will not be found automatically.
 # Use snakemake to directly construct a UTF-16 XHTML version of the
-# webpage, as the presence of this file in compiled-home indicates that
-# the _.jq.xml file should be used.
+# webpage, as the presence of this file in 'homepage' indicates that the
+# _.jq.xml file should be used.
 
 def static_source(wildcards):
 	for repo in REPOS:
@@ -56,43 +56,43 @@ for path in glob_wildcards(pattern)[0] ]
 
 ARTICLE_NUMBERS = glob_wildcards("../06tron/articles/{hex}.xml")[0]
 
-ruleorder: homepage_html5 > blog_html5 > blog_atom > blog_json > article_json > mirror_html5 > tree_index_html5 > jq_to_html5 > jq_to_html_polyglot > jq_to_xhtml_utf16 > static_file
+ruleorder: homepage_html5 > blog_html5 > blog_atom > blog_json > article_json > mirror_html5 > sitemap_html5 > tree_index_html5 > jq_to_html5 > jq_to_html_polyglot > jq_to_xhtml_utf16 > static_file
 
 rule all:
 	input:
 		expand("{path}/index.html", path = ALL_DIRECTORIES)
-		expand("compiled-home/{path}.html", path = JQ_HTML_PATHS),
-		expand("compiled-home/{path}.xht", path = JQ_HTML_PATHS),
-		expand("compiled-home/{path}.utf-16.xhtml", path = JQ_HTML_PATHS),
-		expand("compiled-home/{path}", path = STATIC_PATHS)
+		expand("homepage/{path}.html", path = JQ_HTML_PATHS),
+		expand("homepage/{path}.xht", path = JQ_HTML_PATHS),
+		expand("homepage/{path}.utf-16.xhtml", path = JQ_HTML_PATHS),
+		expand("homepage/{path}", path = STATIC_PATHS)
 	default_target: True
 
 rule homepage_html5:
 	input:
-		prefix = "compiled-home/feed.json",
+		prefix = "homepage/feed.json",
 		html = "../06tron/home.6t.lt/index.html",
 		js = "../06tron/home.6t.lt/mainpage.js"
 	output:
-		"compiled-home/index.html",
-		js = "compiled-home/mainpage.js"
+		"homepage/index.html",
+		js = "homepage/mainpage.js"
 	script:
 		"scripts/copy-files.py"
 
 rule blog_html5:
 	input:
 		"../06tron/home.6t.lt/json-feed-to-mf2.jq",
-		"compiled-home/feed.json"
+		"homepage/feed.json"
 	output:
-		"compiled-home/mf2.html"
+		"homepage/mf2.html"
 	shell:
 		"jq --from-file {input} --raw-output > {output}"
 
 rule blog_atom:
 	input:
 		"../06tron/home.6t.lt/json-feed-to-atom.jq",
-		"compiled-home/feed.json"
+		"homepage/feed.json"
 	output:
-		"compiled-home/atom.xml"
+		"homepage/atom.xml"
 	shell:
 		"jq --from-file {input} --raw-output > {output}"
 
@@ -101,7 +101,7 @@ rule blog_json:
 		expand("blog/{hex}.json", hex = ARTICLE_NUMBERS),
 		"../06tron/home.6t.lt/outline.json"
 	output:
-		"compiled-home/feed.json"
+		"homepage/feed.json"
 	script:
 		"scripts/create-blog-json.py"
 
@@ -117,16 +117,25 @@ rule mirror_html5:
 	input:
 		"../06tron/home.6t.lt/mirror.html"
 	output:
-		"compiled-home/shortcuts/index.html"
+		"homepage/shortcuts/index.html"
 	script:
 		"scripts/copy-files.py"
 
-rule tree_index_html5:
+rule sitemap_html5:
 	input:
-		"compiled-home/{path}",
+		"homepage",
 		prefix = "../06tron/home.6t.lt/sitemap.html"
 	output:
-		"compiled-home/{path}/index.html"
+		"homepage/sitemap.html"
+	script:
+		"scripts/create-tree.py"
+
+rule tree_index_html5:
+	input:
+		"homepage/{path}",
+		prefix = "../06tron/home.6t.lt/sitemap.html"
+	output:
+		"homepage/{path}/index.html"
 	script:
 		"scripts/create-tree.py"
 
@@ -135,7 +144,7 @@ rule jq_to_html5:
 		unpack(jq_html_source),
 		template = "full-html5.jq"
 	output:
-		"compiled-home/{path}.html"
+		"homepage/{path}.html"
 	script:
 		"scripts/jq-to-html.py"
 
@@ -145,7 +154,7 @@ rule jq_to_html_polyglot:
 		prefix = "head-html-polyglot.txt",
 		template = "tail-xhtml.jq"
 	output:
-		"compiled-home/{path}.xht"
+		"homepage/{path}.xht"
 	script:
 		"scripts/jq-to-html.py"
 
@@ -155,7 +164,7 @@ rule jq_to_xhtml_utf16:
 		prefix = "head-xhtml-utf16.txt",
 		template = "tail-xhtml.jq"
 	output:
-		"compiled-home/{path}.utf-16.xhtml"
+		"homepage/{path}.utf-16.xhtml"
 	script:
 		"scripts/jq-to-html.py"
 
@@ -163,6 +172,6 @@ rule static_file:
 	input:
 		static_source
 	output:
-		"compiled-home/{path}"
+		"homepage/{path}"
 	script:
 		"scripts/copy-files.py"
