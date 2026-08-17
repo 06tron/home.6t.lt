@@ -7,7 +7,7 @@
 
 import os
 
-ALL_DIRECTORIES = [dirpath for dirpath, dirnames, filenames in os.walk("compiled_home")]
+ALL_DIRECTORIES = [dirpath for dirpath, dirnames, filenames in os.walk("homepage")]
 
 REPOS = [
 	"06tron",
@@ -56,16 +56,7 @@ for path in glob_wildcards(pattern)[0] ]
 
 ARTICLE_NUMBERS = glob_wildcards("../06tron/articles/{hex}.xml")[0]
 
-ruleorder: homepage_html5 > blog_html5 > blog_atom > blog_json > article_json > mirror_html5 > sitemap_html5 > tree_index_html5 > jq_to_html5 > jq_to_html_polyglot > jq_to_xhtml_utf16 > static_file
-
-rule all:
-	input:
-		expand("{path}/index.html", path = ALL_DIRECTORIES)
-		expand("homepage/{path}.html", path = JQ_HTML_PATHS),
-		expand("homepage/{path}.xht", path = JQ_HTML_PATHS),
-		expand("homepage/{path}.utf-16.xhtml", path = JQ_HTML_PATHS),
-		expand("homepage/{path}", path = STATIC_PATHS)
-	default_target: True
+ruleorder: homepage_html5 > blog_mf2 > blog_atom > blog_json > article_json > mirror_html5 > sitemap_html5 > tree_index_html5 > jq_to_html5 > jq_to_html_polyglot > jq_to_xhtml_utf16 > static_file
 
 rule homepage_html5:
 	input:
@@ -78,7 +69,7 @@ rule homepage_html5:
 	script:
 		"scripts/copy-files.py"
 
-rule blog_html5:
+rule blog_mf2:
 	input:
 		"../06tron/home.6t.lt/json-feed-to-mf2.jq",
 		"homepage/feed.json"
@@ -98,8 +89,8 @@ rule blog_atom:
 
 rule blog_json:
 	input:
-		expand("blog/{hex}.json", hex = ARTICLE_NUMBERS),
-		"../06tron/home.6t.lt/outline.json"
+		"../06tron/home.6t.lt/outline.json",
+		expand("blog/{hex}.json", hex = ARTICLE_NUMBERS)
 	output:
 		"homepage/feed.json"
 	script:
@@ -108,6 +99,7 @@ rule blog_json:
 rule article_json:
 	input:
 		"../06tron/articles/{hex}.xml"
+		outline = "../06tron/home.6t.lt/outline.json"
 	output:
 		"blog/{hex}.json"
 	script:
@@ -175,3 +167,16 @@ rule static_file:
 		"homepage/{path}"
 	script:
 		"scripts/copy-files.py"
+
+rule all:
+	input:
+		expand("{path}/index.html", path = ALL_DIRECTORIES),
+		rules.blog_mf2.output,
+		rules.blog_atom.output,
+		rules.blog_json.output,
+		rules.sitemap_html5.output,
+		expand("homepage/{path}.html", path = JQ_HTML_PATHS),
+		expand("homepage/{path}.xht", path = JQ_HTML_PATHS),
+		expand("homepage/{path}.utf-16.xhtml", path = JQ_HTML_PATHS),
+		expand("homepage/{path}", path = STATIC_PATHS)
+	default_target: True
