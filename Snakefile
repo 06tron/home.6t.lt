@@ -94,16 +94,16 @@ rule blog_json:
 	output:
 		"homepage/feed.json"
 	script:
-		"scripts/create-blog-json.py"
+		"scripts/blog-json.py"
 
 rule article_json:
 	input:
-		"../06tron/articles/{hex}.xml"
+		"../06tron/articles/{hex}.xml",
 		outline = "../06tron/home.6t.lt/outline.json"
 	output:
 		"blog/{hex}.json"
 	script:
-		"scripts/create-article-json.py"
+		"scripts/article-json.py"
 
 rule mirror_html5:
 	input:
@@ -120,7 +120,7 @@ rule sitemap_html5:
 	output:
 		"homepage/sitemap.html"
 	script:
-		"scripts/create-tree.py"
+		"scripts/tree.py"
 
 rule tree_index_html5:
 	input:
@@ -129,7 +129,7 @@ rule tree_index_html5:
 	output:
 		"homepage/{path}/index.html"
 	script:
-		"scripts/create-tree.py"
+		"scripts/tree.py"
 
 rule jq_to_html5:
 	input:
