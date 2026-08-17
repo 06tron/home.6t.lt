@@ -33,11 +33,18 @@ def jq_html_source(wildcards):
 		return input
 	raise ValueError("Source not found in a jq-html-home directory")
 
-JQ_HTML_PATHS = glob_wildcards("homepage/{path}.utf-16.xhtml")[0]
-# Paths to newly created _.jq.xml files will not be found automatically.
-# Use snakemake to directly construct a UTF-16 XHTML version of the
-# webpage, as the presence of this file in 'homepage' indicates that the
-# _.jq.xml file should be used.
+JQ_HTML_PATHS = [
+	"692/dark-mode-highlighter",
+	"data:text/html;charset=utf-8,<!DOCTYPE html><title >&lt;pre></title>",
+	"data:text/plain;charset=utf-8,/ \\",
+	"data:text/plain;charset=utf-8,/#7f7f7f14",
+	"data:text/plain;charset=utf-8,/''\"?",
+	"data:text/plain;charset=utf-8,/())",
+	"shortcuts/about",
+	"shortcuts/granjon-boxes",
+	"shortcuts/note",
+	"texHTML/exercises"
+]
 
 def static_source(wildcards):
 	for repo in REPOS:
@@ -47,7 +54,7 @@ def static_source(wildcards):
 	raise ValueError("Source not found in a static-home directory")
 
 STATIC_PATHS = [ path
-for pattern in expand("../{repo}/static-home/{{path,[^\\.].+\\..+}}", repo = REPOS)
+for pattern in expand(r"../{repo}/static-home/{{path,[^\.]*[^\.\/]+\.[^\/]+}}", repo = REPOS)
 for path in glob_wildcards(pattern)[0] ]
 # Paths to new files within static-home directories will be found
 # automatically, but they should not be hidden files beginning with a
@@ -55,8 +62,6 @@ for path in glob_wildcards(pattern)[0] ]
 # or '.utf-16.xhtml'.
 
 ARTICLE_NUMBERS = glob_wildcards("../06tron/articles/{hex}.xml")[0]
-
-ruleorder: homepage_html5 > blog_mf2 > blog_atom > blog_json > article_json > mirror_html5 > sitemap_html5 > tree_index_html5 > jq_to_html5 > jq_to_html_polyglot > jq_to_xhtml_utf16 > static_file
 
 rule homepage_html5:
 	input:
@@ -115,8 +120,7 @@ rule mirror_html5:
 
 rule sitemap_html5:
 	input:
-		"homepage",
-		prefix = "../06tron/home.6t.lt/sitemap.html"
+		"../06tron/home.6t.lt/sitemap.html"
 	output:
 		"homepage/sitemap.html"
 	script:
@@ -124,12 +128,22 @@ rule sitemap_html5:
 
 rule tree_index_html5:
 	input:
-		"homepage/{path}",
-		prefix = "../06tron/home.6t.lt/sitemap.html"
+		"../06tron/home.6t.lt/sitemap.html"
 	output:
 		"homepage/{path}/index.html"
 	script:
 		"scripts/tree.py"
+
+rule q_encode_xml11_html:
+	input:
+		xml = "../06tron/jq-html-home/698/query-encoding/_.jq.xml",
+		css = "../06tron/jq-html-home/698/query-encoding/_.css",
+		prefix = "head-html-polyglot.txt",
+		template = "tail-xhtml.jq"
+	output:
+		"homepage/698/query-encoding.html"
+	script:
+		"scripts/jq-to-html.py"
 
 rule jq_to_html5:
 	input:
@@ -137,6 +151,8 @@ rule jq_to_html5:
 		template = "full-html5.jq"
 	output:
 		"homepage/{path}.html"
+	wildcard_constraints:
+		path = r"(?!((.*\/)?index\.html|mf2\.html|sitemap\.html|698\/query-encoding\.html)$).*"
 	script:
 		"scripts/jq-to-html.py"
 
@@ -165,6 +181,8 @@ rule static_file:
 		static_source
 	output:
 		"homepage/{path}"
+	wildcard_constraints:
+		path = r"(?!(.*(\.html|\.xht|\.utf-16\.xhtml)|mainpage\.js|atom\.xml|feed\.json)$).*"
 	script:
 		"scripts/copy-files.py"
 
@@ -175,6 +193,7 @@ rule all:
 		rules.blog_atom.output,
 		rules.blog_json.output,
 		rules.sitemap_html5.output,
+		rules.q_encode_xml11_html.output,
 		expand("homepage/{path}.html", path = JQ_HTML_PATHS),
 		expand("homepage/{path}.xht", path = JQ_HTML_PATHS),
 		expand("homepage/{path}.utf-16.xhtml", path = JQ_HTML_PATHS),

@@ -8,7 +8,8 @@
 import os
 import subprocess
 
-output_dir = snakemake.input[0]
+output_file = snakemake.output[0]
+output_dir = output_file[:output_file.rindex("/")]
 os.makedirs(output_dir, exist_ok = True)
 
 base = ""
@@ -29,7 +30,7 @@ tree_html = subprocess.run(
 		"*.utf-16.xhtml",
 		"-H",
 		"-." + output_dir[8:], # remove "homepage"
-		"--hintro=" + snakemake.input["prefix"]
+		"--hintro=" + snakemake.input[0]
 	],
 	check = True,
 	capture_output = True,

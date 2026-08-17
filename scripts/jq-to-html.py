@@ -107,4 +107,9 @@ if snakemake.rule == "jq_to_xhtml_utf16":
 else:
 	final_output = json_to_html.stdout
 
-open(output_file, mode = "ab").write(final_output)
+file_obj = open(output_file, mode = "ab")
+
+if snakemake.rule == "q_encode_xml11_html":
+	file_obj.write(b"<?xml\nversion='1.1'\nencoding='utf-8'?>")
+
+file_obj.write(final_output)
