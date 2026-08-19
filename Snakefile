@@ -65,12 +65,18 @@ ARTICLE_NUMBERS = glob_wildcards("../06tron/articles/{hex}.xml")[0]
 
 rule homepage_html5:
 	input:
+		"../06tron/home.6t.lt/index.html"
+	output:
+		"homepage/index.html"
+	script:
+		"scripts/copy-files.py"
+
+rule homepage_js:
+	input:
 		prefix = "homepage/feed.json",
-		html = "../06tron/home.6t.lt/index.html",
 		js = "../06tron/home.6t.lt/mainpage.js"
 	output:
-		"homepage/index.html",
-		js = "homepage/mainpage.js"
+		"homepage/mainpage.js"
 	script:
 		"scripts/copy-files.py"
 
@@ -191,6 +197,7 @@ rule static_file:
 rule all:
 	input:
 		rules.homepage_html5.output,
+		rules.homepage_js.output,
 		rules.mirror_html5.output,
 		rules.blog_mf2.output,
 		rules.blog_atom.output,

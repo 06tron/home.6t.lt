@@ -12,9 +12,8 @@ main_output = snakemake.output[0]
 output_dir = main_output[:main_output.rindex("/")]
 os.makedirs(output_dir, exist_ok = True)
 
-if snakemake.rule == "homepage_html5":
-	shutil.copy(snakemake.input["html"], main_output)
-	js_output = open(snakemake.output["js"], mode = "w")
+if snakemake.rule == "homepage_js":
+	js_output = open(main_output, mode = "w")
 	js_output.write("const jsonFeed = ")
 	shutil.copyfileobj(open(snakemake.input["prefix"]), js_output)
 	shutil.copyfileobj(open(snakemake.input["js"]), js_output)
