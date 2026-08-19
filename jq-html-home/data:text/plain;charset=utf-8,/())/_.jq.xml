@@ -6,7 +6,7 @@ rel='stylesheet'
 href='./column-style.css'/>"
 
 , main:
-"<article><p>These four aside-notes use <code><var>id</var></code> attributes starting with <q><samp>body_</samp></q>, allowing them to be styled with CSS counters by my website's <a
+"<article><p>These five aside-notes use <code><var>id</var></code> attributes starting with <q><samp>body_</samp></q>, allowing them to be styled with CSS counters by my website's <a
 href='./shared-style.css'
 class='naked'>main stylesheet</a>.</p>
 
@@ -60,7 +60,7 @@ from under which protruded a rifle, he rode, a fugitive, trying to attract as li
 
 </aside>
 
-<hr/><p>These four aside-notes use <code><var>id</var></code> attributes starting with <q><samp>no_css_</samp></q>, and will not receive any extra CSS styling.</p>
+<hr/><p>These five aside-notes use <code><var>id</var></code> attributes starting with <q><samp>no_css_</samp></q>, and will not receive any extra CSS styling.</p>
 
 <blockquote>
 

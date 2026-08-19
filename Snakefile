@@ -188,14 +188,17 @@ rule static_file:
 
 rule all:
 	input:
-		expand("{path}/index.html", path = ALL_DIRECTORIES),
 		rules.blog_mf2.output,
 		rules.blog_atom.output,
 		rules.blog_json.output,
-		rules.sitemap_html5.output,
 		rules.q_encode_xml11_html.output,
 		expand("homepage/{path}.html", path = JQ_HTML_PATHS),
 		expand("homepage/{path}.xht", path = JQ_HTML_PATHS),
 		expand("homepage/{path}.utf-16.xhtml", path = JQ_HTML_PATHS),
 		expand("homepage/{path}", path = STATIC_PATHS)
 	default_target: True
+
+rule tree_indices:
+	input:
+		expand("{path}/index.html", path = ALL_DIRECTORIES),
+		rules.sitemap_html5.output

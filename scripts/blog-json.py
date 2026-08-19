@@ -25,7 +25,7 @@ update_time = subprocess.run(
 blog_json = subprocess.run(
 	[
 		"jq",
-		f'.[0] * {{ items: .[1:] | reverse, _atom_elements: {{ updated: "{update_time}" }} }} | del(._named_items)',
+		f'.[0] * {{ items: .[1:], _atom_elements: {{ updated: "{update_time}" }} }} | del(._named_items)',
 		"--slurp",
 		*snakemake.input,
 		"--compact-output"
