@@ -124,6 +124,14 @@ rule mirror_html5:
 	script:
 		"scripts/copy-files.py"
 
+rule not_found_html5:
+	input:
+		"../06tron/home.6t.lt/404.html"
+	output:
+		"homepage/404.html"
+	script:
+		"scripts/copy-files.py"
+
 rule sitemap_html5:
 	input:
 		"../06tron/home.6t.lt/sitemap.html"
@@ -160,7 +168,7 @@ rule jq_to_html5:
 	output:
 		"homepage/{path}.html"
 	wildcard_constraints:
-		path = r"(?!((.*\/)?index|mf2|sitemap|698\/query-encoding)$).*"
+		path = r"(?!((.*\/)?index|mf2|404|sitemap|698\/query-encoding)$).*"
 	script:
 		"scripts/jq-to-html.py"
 
@@ -198,10 +206,11 @@ rule all:
 	input:
 		rules.homepage_html5.output,
 		rules.homepage_js.output,
-		rules.mirror_html5.output,
 		rules.blog_mf2.output,
 		rules.blog_atom.output,
 		rules.blog_json.output,
+		rules.mirror_html5.output,
+		rules.not_found_html5.output,
 		rules.q_encode_xml11_html.output,
 		expand("homepage/{path}.html", path = JQ_HTML_PATHS),
 		expand("homepage/{path}.xht", path = JQ_HTML_PATHS),
@@ -213,3 +222,5 @@ rule tree_indices:
 	input:
 		expand("{path}/index.html", path = ALL_DIRECTORIES),
 		rules.sitemap_html5.output
+	shell:
+		"find homepage -name .DS_Store -delete"

@@ -52,7 +52,7 @@ class='dt-updated'></time>"
 ] else [
 "<header
 id='shared_top'><a
-href='./'><img
+href='./index.html'><img
 alt='Heart-shaped tromino icon.'
 src='./icons/♥.svg'
 height='40'
