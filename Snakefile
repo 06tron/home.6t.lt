@@ -131,6 +131,8 @@ rule tree_index_html5:
 		"../06tron/home.6t.lt/sitemap.html"
 	output:
 		"homepage/{path}/index.html"
+	wildcard_constraints:
+		path = r"(?!shortcuts$).*"
 	script:
 		"scripts/tree.py"
 
@@ -138,7 +140,7 @@ rule q_encode_xml11_html:
 	input:
 		xml = "../06tron/jq-html-home/698/query-encoding/_.jq.xml",
 		css = "../06tron/jq-html-home/698/query-encoding/_.css",
-		prefix = "head-html-polyglot.txt",
+		prefix = "head-xml11-htm.txt",
 		template = "tail-xhtml.jq"
 	output:
 		"homepage/698/query-encoding.html"
@@ -152,7 +154,7 @@ rule jq_to_html5:
 	output:
 		"homepage/{path}.html"
 	wildcard_constraints:
-		path = r"(?!((.*\/)?index\.html|mf2\.html|sitemap\.html|698\/query-encoding\.html)$).*"
+		path = r"(?!((.*\/)?index|mf2|sitemap|698\/query-encoding)$).*"
 	script:
 		"scripts/jq-to-html.py"
 
@@ -188,6 +190,8 @@ rule static_file:
 
 rule all:
 	input:
+		rules.homepage_html5.output,
+		rules.mirror_html5.output,
 		rules.blog_mf2.output,
 		rules.blog_atom.output,
 		rules.blog_json.output,
