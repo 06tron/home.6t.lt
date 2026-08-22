@@ -1,0 +1,43 @@
+SHARED TOP
+
+1. full-html5.jq + index.html + json-feed-to-mf2.jq + sitemap.html
+
+<header
+id=shared_top><a
+href=./index.html><img
+alt='Heart-shaped tromino icon.'
+src=./icons/♥.svg
+height=40
+width=40></a><a
+href=./mf2.html>[blog]</a><!-- 3RD CHILD --><a
+href=./sitemap.html>[sitemap]</a></header>
+
+2. tail-xhtml.jq
+
+<header
+id='shared_top'><a
+href='./index.html'><img
+alt='Heart-shaped tromino icon.'
+src='./icons/♥.svg'
+height='40'
+width='40'/></a><a
+href='./mf2.html'>[blog]</a><!-- 3RD CHILD --><a
+href='./sitemap.html'>[sitemap]</a></header>
+
+3RD CHILD
+
+1. full-html5.jq
+
+<a
+href=https://tangled.org>updated <time
+class=dt-updated>YYYY-MM-DD</time></a>
+
+2. tail-xhtml.jq
+
+<a
+href='https://tangled.org'>updated <time
+class='dt-updated'>YYYY-MM-DD</time></a>
+
+3. index.html
+
+<time></time>
