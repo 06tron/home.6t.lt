@@ -29,15 +29,26 @@ href='./sitemap.html'>[sitemap]</a></header>
 1. full-html5.jq
 
 <a
-href=https://tangled.org>updated <time
+href=https://tangled.org/...>updated <time
 class=dt-updated>YYYY-MM-DD</time></a>
 
 2. tail-xhtml.jq
 
 <a
-href='https://tangled.org'>updated <time
+href='https://tangled.org/...'>updated <time
 class='dt-updated'>YYYY-MM-DD</time></a>
 
 3. index.html
 
 <time></time>
+
+4. json-feed-to-mf2.jq
+
+<a
+href=https://tangled.org/mrichardson.tngl.sh/06tron/tree/homepage/articles>updated <time
+datetime=YYYY-MM-DDTHH:MM:SS-HH:MM
+class=dt-updated>YYYY-MM-DD</time></a>
+
+5. sitemap.html
+
+<span>YYYY-MM-DD build X.X.X</span>

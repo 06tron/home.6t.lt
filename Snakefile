@@ -35,11 +35,11 @@ def jq_html_source(wildcards):
 
 JQ_HTML_PATHS = [
 	"692/dark-mode-highlighter",
-	"data:text/html;charset=utf-8,<!DOCTYPE html><title >&lt;pre></title>",
+	"6a7/aside-notes",
+	"6a7/nowrap-text",
 	"data:text/plain;charset=utf-8,/ \\",
 	"data:text/plain;charset=utf-8,/#7f7f7f14",
 	"data:text/plain;charset=utf-8,/''\"?",
-	"data:text/plain;charset=utf-8,/())",
 	"shortcuts/about",
 	"shortcuts/granjon-boxes",
 	"shortcuts/note",
@@ -54,7 +54,7 @@ def static_source(wildcards):
 	raise ValueError("Source not found in a static-home directory")
 
 STATIC_PATHS = [ path
-for pattern in expand(r"../{repo}/static-home/{{path,[^\.]*[^\.\/]+\.[^\/]+}}", repo = REPOS)
+for pattern in expand(r"../{repo}/static-home/{{path,[^\.]*[^\./]+\.[^/]+}}", repo = REPOS)
 for path in glob_wildcards(pattern)[0] ]
 # Paths to new files within static-home directories will be found
 # automatically, but they should not be hidden files beginning with a
@@ -146,7 +146,7 @@ rule tree_index_html5:
 	output:
 		"homepage/{path}/index.html"
 	wildcard_constraints:
-		path = r"(?!shortcuts$).*"
+		path = r"(?!shortcuts/index.html$).*"
 	script:
 		"scripts/tree.py"
 
@@ -168,7 +168,7 @@ rule jq_to_html5:
 	output:
 		"homepage/{path}.html"
 	wildcard_constraints:
-		path = r"(?!((.*\/)?index|mf2|404|sitemap|698\/query-encoding)$).*"
+		path = r"(?!((.*/)?index|mf2|404|sitemap|698/query-encoding).html$).*"
 	script:
 		"scripts/jq-to-html.py"
 

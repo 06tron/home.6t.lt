@@ -1,0 +1,1 @@
+Columns consist of "article" elements and "hgroup:has(+ article)" elements.
