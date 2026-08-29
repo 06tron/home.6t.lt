@@ -61,6 +61,8 @@ for path in glob_wildcards(pattern)[0] ]
 # dot, and should contain a file extension other than '.html', '.xht',
 # or '.utf-16.xhtml'.
 
+STATIC_PATHS.append("_headers");
+
 ARTICLE_NUMBERS = glob_wildcards("../06tron/articles/{hex}.xml")[0]
 
 rule homepage_html5:

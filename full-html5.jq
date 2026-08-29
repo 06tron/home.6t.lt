@@ -63,7 +63,7 @@ alt='Heart-shaped tromino icon.'
 src=./icons/♥.svg
 height=40
 width=40></a><a
-href=./mf2.html>blog</a><a
+href=./mf2.html>[blog]</a><a
 href=",
 ($path | [split("/")[1:][] | @uri] | [
 "https://tangled.org/mrichardson.tngl.sh/",
@@ -75,7 +75,7 @@ href=",
 class=dt-updated>",
 $updated,
 "</time></a><a
-href=./sitemap.html>sitemap</a></header>"
+href=./sitemap.html>[sitemap]</a></header>"
 ] end,
 "<main
 class=e-content>",
