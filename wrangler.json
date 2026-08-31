@@ -1,6 +1,6 @@
 {
-	"name": "home.6t.lt",
-	"compatibility_date": "2026-08-19",
+	"name": "cloudflare-home",
+	"compatibility_date": "2026-08-28",
 	"assets": {
 		"directory": "./homepage/",
 		"html_handling": "none",

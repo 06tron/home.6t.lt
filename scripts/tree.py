@@ -30,6 +30,8 @@ tree_html = subprocess.run(
 		"*.utf-16.xhtml",
 		"-I",
 		"homepage/data:text/",
+		"-I",
+		"_*",
 		"-H",
 		"-." + output_dir[8:], # remove "homepage"
 		"--hintro=" + snakemake.input[0]

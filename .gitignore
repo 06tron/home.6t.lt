@@ -1,5 +1,7 @@
 blog/
 homepage/
+node_modules/
+package-lock.json
 .snakemake/
 SCHEMA/
 
