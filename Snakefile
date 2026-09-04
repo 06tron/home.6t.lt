@@ -216,9 +216,12 @@ rule all:
 		rules.q_encode_xml11_html.output,
 		expand("homepage/{path}.html", path = JQ_HTML_PATHS),
 		expand("homepage/{path}.xht", path = JQ_HTML_PATHS),
-		expand("homepage/{path}.utf-16.xhtml", path = JQ_HTML_PATHS),
-		expand("homepage/{path}", path = STATIC_PATHS)
+		expand("homepage/{path}.utf-16.xhtml", path = JQ_HTML_PATHS)
 	default_target: True
+
+rule static_files:
+	input:
+		expand("homepage/{path}", path = STATIC_PATHS)
 
 rule tree_indices:
 	input:

@@ -1,4 +1,4 @@
-{ name: "&lt;pre>"
+{ name: "text-wrap-mode: nowrap;"
 
 , head:
 "<link
