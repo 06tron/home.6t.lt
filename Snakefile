@@ -61,7 +61,7 @@ for path in glob_wildcards(pattern)[0] ]
 # dot, and should contain a file extension other than '.html', '.xht',
 # or '.utf-16.xhtml'.
 
-STATIC_PATHS.append("_headers");
+STATIC_PATHS.extend(("_headers", ".assetsignore"));
 
 ARTICLE_NUMBERS = glob_wildcards("../06tron/articles/{hex}.xml")[0]
 
@@ -227,5 +227,3 @@ rule tree_indices:
 	input:
 		expand("{path}/index.html", path = ALL_DIRECTORIES),
 		rules.sitemap_html5.output
-	shell:
-		"find homepage -name .DS_Store -delete"

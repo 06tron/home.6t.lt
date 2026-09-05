@@ -2,8 +2,24 @@
 	"name": "cloudflare-home",
 	"compatibility_date": "2026-08-28",
 	"assets": {
-		"directory": "./homepage/",
+		"directory": "./homepage",
 		"html_handling": "none",
 		"not_found_handling": "404-page"
+	},
+	"routes": [
+		{
+			"custom_domain": true,
+			"pattern": "home.6t.lt"
+		}
+	],
+	"env": {
+		"beta": {
+			"routes": [
+				{
+					"custom_domain": true,
+					"pattern": "xn--zca.6t.lt"
+				}
+			]
+		}
 	}
 }
