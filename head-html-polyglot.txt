@@ -2,5 +2,6 @@
 html><html
 xmlns='http://www.w3.org/1999/xhtml'
 class='h-entry'
+xml:lang='en'
 lang='en'><head><meta
 charset='utf-8'/>
