@@ -47,11 +47,12 @@ item_json = subprocess.run(
 		"--slurpfile",
 		"outline",
 		snakemake.input["outline"],
-		"--compact-output"
+		"--tab"
 	],
 	check = True,
 	input = handle_whitespace.stdout,
 	stdout = subprocess.PIPE
 )
 
-open(snakemake.output[0], mode = "wb").write(item_json.stdout)
+with open(snakemake.output[0], mode = "wb") as f:
+	f.write(item_json.stdout)

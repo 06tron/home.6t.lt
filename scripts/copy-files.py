@@ -13,9 +13,11 @@ output_dir = main_output[:main_output.rindex("/")]
 os.makedirs(output_dir, exist_ok = True)
 
 if snakemake.rule == "homepage_js":
-	js_output = open(main_output, mode = "w")
-	js_output.write("const jsonFeed = ")
-	shutil.copyfileobj(open(snakemake.input["prefix"]), js_output)
-	shutil.copyfileobj(open(snakemake.input["js"]), js_output)
+	with open(main_output, mode = "w") as js_output:
+		js_output.write("const jsonFeed = ")
+		with open(snakemake.input["prefix"]) as json_feed:
+			shutil.copyfileobj(json_feed, js_output)
+		with open(snakemake.input["js"]) as page_js:
+			shutil.copyfileobj(page_js, js_output)
 else:
 	shutil.copy(snakemake.input[0], main_output)

@@ -42,4 +42,5 @@ tree_html = subprocess.run(
 	text = True
 ).stdout.replace("<!--BASE-->", base, 1).replace('/"', '/index.html"')
 
-open(snakemake.output[0], mode = "w").write(tree_html)
+with open(snakemake.output[0], mode = "w") as f:
+	f.write(tree_html)

@@ -7,6 +7,8 @@
 
 import subprocess
 
+# YYYY-MM-DDTHH:MM:SS-HH:MM form of the latest update time to the
+# homepage branch articles folder.
 update_time = subprocess.run(
 	[
 		"git",
@@ -34,4 +36,7 @@ blog_json = subprocess.run(
 	stdout = subprocess.PIPE
 )
 
-open(snakemake.output[0], mode = "wb").write(blog_json.stdout)
+with open(snakemake.output[0], mode = "wb") as f:
+	f.write(blog_json.stdout)
+	f.seek(-1, whence=2)
+	f.truncate()
