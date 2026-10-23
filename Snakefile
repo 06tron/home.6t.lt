@@ -103,7 +103,7 @@ rule blog_atom:
 rule blog_json:
 	input:
 		"../06tron/home.6t.lt/outline.json",
-		expand("blog/{hex}.json", hex = ARTICLE_NUMBERS)
+		expand("blog-json/{hex}.json", hex = ARTICLE_NUMBERS)
 	output:
 		"homepage/feed.json"
 	script:
@@ -114,7 +114,7 @@ rule article_json:
 		"../06tron/articles/{hex}.xml",
 		outline = "../06tron/home.6t.lt/outline.json"
 	output:
-		"blog/{hex}.json"
+		"blog-json/{hex}.json"
 	script:
 		"scripts/article-json.py"
 

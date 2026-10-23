@@ -27,7 +27,7 @@ update_time = subprocess.run(
 blog_json = subprocess.run(
 	[
 		"jq",
-		f'.[0] * {{ items: .[1:] | reverse, _atom_elements: {{ updated: "{update_time}" }} }} | del(._named_items)',
+		f'.[0].feed_outline * {{ items: .[1:] | reverse, _mrichardson: {{ updated: "{update_time}" }} }}',
 		"--slurp",
 		*snakemake.input,
 		"--compact-output"
@@ -38,5 +38,5 @@ blog_json = subprocess.run(
 
 with open(snakemake.output[0], mode = "wb") as f:
 	f.write(blog_json.stdout)
-	f.seek(-1, whence=2)
+	f.seek(-1, 2) # os.SEEK_END = 2
 	f.truncate()

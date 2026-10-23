@@ -41,12 +41,12 @@ update_time = subprocess.run(
 item_json = subprocess.run(
 	[
 		"jq",
-		f'{{ date_modified: "{update_time}", content_html: . }} + $outline[0]._named_items."{number}" | .title |= "{number} - " + .',
-		"--raw-input",
-		"--slurp",
+		f'{{ date_modified: "{update_time}", content_html: . }} + $outline[0]."{number}" | .title |= "{number} - " + .',
 		"--slurpfile",
 		"outline",
 		snakemake.input["outline"],
+		"--raw-input",
+		"--slurp",
 		"--tab"
 	],
 	check = True,

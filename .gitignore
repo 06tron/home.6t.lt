@@ -1,9 +1,10 @@
-blog/
-homepage/
+.snakemake/
+.wrangler/
 node_modules/
 package-lock.json
-.snakemake/
-SCHEMA/
-.wrangler/
+
+blog-json/
+homepage/
+schema/
 
 .DS_Store
