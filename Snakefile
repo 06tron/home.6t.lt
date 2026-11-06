@@ -71,7 +71,7 @@ rule homepage_html5:
 	output:
 		"homepage/index.html"
 	script:
-		"scripts/copy-files.py"
+		"python/copy-files.py"
 
 rule homepage_js:
 	input:
@@ -80,11 +80,11 @@ rule homepage_js:
 	output:
 		"homepage/mainpage.js"
 	script:
-		"scripts/copy-files.py"
+		"python/copy-files.py"
 
 rule blog_mf2:
 	input:
-		"../06tron/home.6t.lt/json-feed-to-mf2.jq",
+		"script-sources/json-feed-to-mf2.jq",
 		"homepage/feed.json"
 	output:
 		"homepage/mf2.html"
@@ -93,7 +93,7 @@ rule blog_mf2:
 
 rule blog_atom:
 	input:
-		"../06tron/home.6t.lt/json-feed-to-atom.jq",
+		"script-sources/json-feed-to-atom.jq",
 		"homepage/feed.json"
 	output:
 		"homepage/atom.xml"
@@ -102,21 +102,21 @@ rule blog_atom:
 
 rule blog_json:
 	input:
-		"../06tron/home.6t.lt/outline.json",
+		"script-sources/outline.json",
 		expand("blog-json/{hex}.json", hex = ARTICLE_NUMBERS)
 	output:
 		"homepage/feed.json"
 	script:
-		"scripts/blog-json.py"
+		"python/blog-json.py"
 
 rule article_json:
 	input:
 		"../06tron/articles/{hex}.xml",
-		outline = "../06tron/home.6t.lt/outline.json"
+		outline = "script-sources/outline.json"
 	output:
 		"blog-json/{hex}.json"
 	script:
-		"scripts/article-json.py"
+		"python/article-json.py"
 
 rule mirror_html5:
 	input:
@@ -124,7 +124,7 @@ rule mirror_html5:
 	output:
 		"homepage/shortcuts/index.html"
 	script:
-		"scripts/copy-files.py"
+		"python/copy-files.py"
 
 rule not_found_html5:
 	input:
@@ -132,7 +132,7 @@ rule not_found_html5:
 	output:
 		"homepage/404.html"
 	script:
-		"scripts/copy-files.py"
+		"python/copy-files.py"
 
 rule sitemap_html5:
 	input:
@@ -140,7 +140,7 @@ rule sitemap_html5:
 	output:
 		"homepage/sitemap.html"
 	script:
-		"scripts/tree.py"
+		"python/tree.py"
 
 rule tree_index_html5:
 	input:
@@ -150,49 +150,49 @@ rule tree_index_html5:
 	wildcard_constraints:
 		path = r"(?!shortcuts/index.html$).*"
 	script:
-		"scripts/tree.py"
+		"python/tree.py"
 
 rule q_encode_xml11_html:
 	input:
 		xml = "../06tron/jq-html-home/698/query-encoding/_.jq.xml",
 		css = "../06tron/jq-html-home/698/query-encoding/_.css",
-		prefix = "head-xml11-htm.txt",
-		template = "tail-xhtml.jq"
+		prefix = "static-sources/head-xml11-htm.txt",
+		template = "script-sources/tail-xhtml.jq"
 	output:
 		"homepage/698/query-encoding.html"
 	script:
-		"scripts/jq-to-html.py"
+		"python/jq-to-html.py"
 
 rule jq_to_html5:
 	input:
 		unpack(jq_html_source),
-		template = "full-html5.jq"
+		template = "script-sources/full-html5.jq"
 	output:
 		"homepage/{path}.html"
 	wildcard_constraints:
 		path = r"(?!((.*/)?index|mf2|404|sitemap|698/query-encoding).html$).*"
 	script:
-		"scripts/jq-to-html.py"
+		"python/jq-to-html.py"
 
 rule jq_to_html_polyglot:
 	input:
 		unpack(jq_html_source),
-		prefix = "head-html-polyglot.txt",
-		template = "tail-xhtml.jq"
+		prefix = "static-sources/head-html-polyglot.txt",
+		template = "script-sources/tail-xhtml.jq"
 	output:
 		"homepage/{path}.xht"
 	script:
-		"scripts/jq-to-html.py"
+		"python/jq-to-html.py"
 
 rule jq_to_xhtml_utf16:
 	input:
 		unpack(jq_html_source),
-		prefix = "head-xhtml-utf16.txt",
-		template = "tail-xhtml.jq"
+		prefix = "static-sources/head-xhtml-utf16.txt",
+		template = "script-sources/tail-xhtml.jq"
 	output:
 		"homepage/{path}.utf-16.xhtml"
 	script:
-		"scripts/jq-to-html.py"
+		"python/jq-to-html.py"
 
 rule static_file:
 	input:
@@ -202,7 +202,7 @@ rule static_file:
 	wildcard_constraints:
 		path = r"(?!(.*(\.html|\.xht|\.utf-16\.xhtml)|mainpage\.js|atom\.xml|feed\.json)$).*"
 	script:
-		"scripts/copy-files.py"
+		"python/copy-files.py"
 
 rule all:
 	input:
