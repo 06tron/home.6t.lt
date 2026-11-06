@@ -67,7 +67,7 @@ ARTICLE_NUMBERS = glob_wildcards("../06tron/articles/{hex}.xml")[0]
 
 rule homepage_html5:
 	input:
-		"../06tron/home.6t.lt/index.html"
+		"static-sources/index.html"
 	output:
 		"homepage/index.html"
 	script:
@@ -76,7 +76,7 @@ rule homepage_html5:
 rule homepage_js:
 	input:
 		prefix = "homepage/feed.json",
-		js = "../06tron/home.6t.lt/mainpage.js"
+		js = "static-sources/mainpage.js"
 	output:
 		"homepage/mainpage.js"
 	script:
@@ -120,7 +120,7 @@ rule article_json:
 
 rule mirror_html5:
 	input:
-		"../06tron/home.6t.lt/mirror.html"
+		"static-sources/mirror.html"
 	output:
 		"homepage/shortcuts/index.html"
 	script:
@@ -128,7 +128,7 @@ rule mirror_html5:
 
 rule not_found_html5:
 	input:
-		"../06tron/home.6t.lt/404.html"
+		"static-sources/404.html"
 	output:
 		"homepage/404.html"
 	script:
@@ -136,7 +136,7 @@ rule not_found_html5:
 
 rule sitemap_html5:
 	input:
-		"../06tron/home.6t.lt/sitemap.html"
+		"static-sources/sitemap.html"
 	output:
 		"homepage/sitemap.html"
 	script:
@@ -144,7 +144,7 @@ rule sitemap_html5:
 
 rule tree_index_html5:
 	input:
-		"../06tron/home.6t.lt/sitemap.html"
+		"static-sources/sitemap.html"
 	output:
 		"homepage/{path}/index.html"
 	wildcard_constraints:
