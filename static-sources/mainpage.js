@@ -28,7 +28,7 @@ function selectContent(selector, unnumbered = false) {
 	for (const a of main.querySelectorAll("a[href^='https://home.6t.lt/']")) {
 		a.href = "." + a.href.slice(18);
 	}
-	for (const e of main.querySelectorAll(":is(iframe,img)[src^='https://home.6t.lt/']")) {
+	for (const e of main.querySelectorAll("img[src^='https://home.6t.lt/'],iframe[src^='https://home.6t.lt/']")) {
 		e.src = "." + e.src.slice(18);
 	}
 	return main;
@@ -40,7 +40,7 @@ function selectContent(selector, unnumbered = false) {
  * @returns {HTMLElement} A <main> element containing an <h1> with the specified item's title followed by all of its HTML content. No relative links are created.
  */
 function itemContent(itemId) {
-	const feedItem = jsonFeed.items.at(-itemId);
+	const feedItem = jsonFeed.items[jsonFeed.items.length - itemId];
 	const main = document.createElement("main");
 	const h1 = document.createElement("h1");
 	h1.textContent = feedItem.title;
@@ -49,7 +49,7 @@ function itemContent(itemId) {
 	return main;
 }
 
-const urlParams = new URLSearchParams(window.location.search);
+const urlParams = new URLSearchParams(location.search);
 const articleId = Math.floor(urlParams.get("article"));
 
 let isHome = false;
@@ -66,34 +66,9 @@ if (articleId > 0 && articleId <= jsonFeed.items.length) {
 	main = selectContent(selector, isHome);
 }
 
-const footer = document.querySelector("article > footer");
-
-footer.insertAdjacentElement("beforebegin", main);
-if (!isHome) {
-	document.querySelector("article > h1").remove();
-	footer.children[0].remove();
-}
-
 /**
  * @returns An object containing properties to be added to a <time> element. The property values include a hexadecimal representation of the current mebisecond truncated to one radix place.
  */
-function timeTemporal() {
-	const now = Temporal.Now.instant();
-	const ms = now.epochMilliseconds;
-	const hex = Math.floor(ms / 65536e3).toString(16);
-	const unit = 1048576e3;
-	const start = Math.floor(ms / unit) * unit;
-	return {
-		textContent: hex.slice(0, -1) + "." + hex.slice(-1),
-		dateTime: now.toString(),
-		title: `${
-			Temporal.Instant.fromEpochMilliseconds(start).toLocaleString()
-		} to ${
-			Temporal.Instant.fromEpochMilliseconds(start + unit).toLocaleString()
-		}`
-	};
-}
-
 function timeDate() {
 	const now = new Date();
 	const ms = now.valueOf();
@@ -111,7 +86,18 @@ function timeDate() {
 	};
 }
 
-Object.assign(
-	document.querySelector("#shared_top > time"),
-	typeof Temporal !== "undefined" ? timeTemporal() : timeDate()
-);
+function insertMain() {
+	const footer = document.querySelector("article > footer");
+	const article = footer.parentElement;
+	footer.insertAdjacentElement("beforebegin", main);
+	if (!isHome) {
+		article.children[0].remove();
+		footer.children[0].remove();
+	}
+	article.style.display = "block";
+	Object.assign(document.querySelector("#shared_top > time"), timeDate());
+}
+
+document.readyState === "loading"
+	? document.addEventListener("DOMContentLoaded", insertMain)
+	: insertMain();
