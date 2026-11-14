@@ -7,22 +7,26 @@
  * @returns {HTMLElement} A <main> element with the selected elements inserted as children. Some URLs are converted to relative links. Numbering in the form of <h2> headings is added by default, along with an <h1> containing the selector used. These additional elements are omitted if an ID selector matching the regex is passed.
  */
 function selectContent(selector, unnumbered = false) {
-	const selected = new DOMParser().parseFromString(
-		jsonFeed.items.map(x => x["content_html"]).join(""),
-		"text/html"
-	).querySelectorAll(selector);
 	const main = document.createElement("main");
+	let selected;
+	try {
+		selected = new DOMParser().parseFromString(
+			jsonFeed.items.map(x => x["content_html"]).join(""),
+			"text/html"
+		).querySelectorAll(selector);
+	} catch {
+		main.style.fontSize = "x-large";
+		main.textContent = "Unsupported Syntax: " + selector;
+		return main;
+	}
 	if (unnumbered || /^#\w+$/.test(selector)) {
 		selected.forEach(main.appendChild, main);
 	} else {
-		const h1 = document.createElement("h1");
-		h1.textContent = selector;
-		main.appendChild(h1);
+		main.appendChild(document.createElement("h1")).textContent = selector;
 		let i = 0;
 		for (const element of selected) {
-			const h2 = document.createElement("h2");
-			h2.textContent = ++i;
-			main.append(h2, element);
+			main.appendChild(document.createElement("h2")).textContent = ++i;
+			main.appendChild(element);
 		}
 	}
 	for (const a of main.querySelectorAll("a[href^='https://home.6t.lt/']")) {
