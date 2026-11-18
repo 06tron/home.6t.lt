@@ -35,6 +35,7 @@ def jq_html_source(wildcards):
 
 JQ_HTML_PATHS = [
 	"692/dark-mode-highlighter",
+	"698/display-atom",
 	"6a7/aside-notes",
 	"6a7/nowrap-text",
 	"data:text/plain;charset=utf-8,/ \\",

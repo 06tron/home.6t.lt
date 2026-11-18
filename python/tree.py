@@ -12,31 +12,36 @@ output_file = snakemake.output[0]
 output_dir = output_file[:output_file.rindex("/")]
 os.makedirs(output_dir, exist_ok = True)
 
+tree_cmd = [
+	"tree",
+	output_dir,
+	"-I",
+	"*/index.html",
+	"-I",
+	"homepage/data:text/",
+	"-I",
+	"_*",
+	"--dirsfirst",
+	"-H",
+	"-." + output_dir[8:], # remove "homepage"
+	"--hintro=" + snakemake.input[0]
+]
+
 base = ""
-if snakemake.rule != "sitemap_html5":
+if snakemake.rule == "sitemap_html5":
+	tree_cmd += [
+		"-I",
+		"*.xht",
+		"-I",
+		"*.utf-16.xhtml"
+	]
+else:
 	base = "<base\nhref="
 	base += "../" * output_dir.count("/")
 	base += ">"
 
 tree_html = subprocess.run(
-	[
-		"tree",
-		output_dir,
-		"-I",
-		"*/index.html",
-		"-I",
-		"*.xht",
-		"-I",
-		"*.utf-16.xhtml",
-		"-I",
-		"homepage/data:text/",
-		"-I",
-		"_*",
-		"--dirsfirst",
-		"-H",
-		"-." + output_dir[8:], # remove "homepage"
-		"--hintro=" + snakemake.input[0]
-	],
+	tree_cmd,
 	check = True,
 	capture_output = True,
 	text = True

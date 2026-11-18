@@ -1,5 +1,6 @@
 /atom.xml
 	Content-Type: application/xhtml+xml;charset=utf-8
+	Access-Control-Allow-Origin: *
 
 /feed.json
 	Content-Type: application/feed+json
