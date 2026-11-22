@@ -1,11 +1,7 @@
-.snakemake/
-.vscode/
-.wrangler/
-node_modules/
-package-lock.json
-
-blog-json/
-homepage/
-validation/xhtml11*
-
 .DS_Store
+.snakemake
+.vscode
+.wrangler
+/blog-json
+/homepage
+/validation

@@ -17,5 +17,8 @@
 /*.js
 	Content-Type: text/javascript;charset=utf-8
 
+/*.opml
+	Content-Type: application/xhtml+xml;charset=utf-8
+
 /*.txt
 	Content-Type: text/plain;charset=utf-8
